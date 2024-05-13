@@ -5,11 +5,14 @@
 
 from Modules.DbServices import DbServices
 from Modules.LandindPage import LandingPage
-from Modules.ProjectPage import ActiveProjectHead, ProjectPage
+from Modules.ProjectPage.ProjectPage import ActiveProjectHead, ProjectPage
 from Modules.Settings import AppSettings
 
 from tkinter import *
 import customtkinter as ctk
+
+# for documenting
+from PIL import Image,ImageGrab
 
 
 class TimeMarker:
@@ -38,8 +41,13 @@ class TimeMarker:
         #################################################################
         
         self.root = ctk.CTk()
-        self.root.geometry("300x400")
+        self.root.geometry("580x400")
         self.root.minsize(200, 200)
+        self.root.title('TimeMarker')
+
+        # NOT USED IN PRODUCTION
+        # for documenting
+        # self.root.bind("<Control-s>", self.grabScreenshot)
 
         # Database services class
         self.dbServices = DbServices()
@@ -134,6 +142,18 @@ class TimeMarker:
 
     def run(self) -> None:
         self.root.mainloop()
+
+    # NOT USED IN PRODUCTION
+    # for documenting (screenshot app and save to ../folder)
+    def grabScreenshot(self,event):
+        toPath = "../Screenshot.png"
+        geom = self.root.geometry() #"580x400+52+52"
+        x1,y1 = int(geom.split("+")[1]) +8  ,int(geom.split("+")[2])+1
+        x2,y2 = x1 + self.root.winfo_width(), y1+ self.root.winfo_height() +30
+        bbox = (x1,y1,x2,y2) # left, top, right, bottom
+        print("screengrab bbox: " + str(bbox))
+        img = ImageGrab.grab(bbox=bbox, include_layered_windows=False, all_screens=False, xdisplay=None)
+        img.save(toPath)
 
 app = TimeMarker()
 app.run()

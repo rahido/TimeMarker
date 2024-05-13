@@ -56,7 +56,7 @@ class LandingPage():
         allLabel = ctk.CTkLabel(master=projectsFrame, text=self.segmentNames[0],fg_color=colors.getLayer3())
         allLabel.pack(pady=(10))
         # Projects
-        projectsListView = ctk.CTkFrame(master=projectsFrame,fg_color=colors.getLayer3())
+        projectsListView = ctk.CTkScrollableFrame(master=projectsFrame,fg_color=colors.getLayer3())
         projectsListView.pack(fill='x')
         self.projectsListView = projectsListView
 
